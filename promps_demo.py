@@ -45,8 +45,9 @@ def plot_mean_and_sigma(mean, sigma, interval=3, color_mean=None, color_shading=
     ###############################################################################
 
 
-def generate_trajectories_from_dynamics(num_trajs = 100, num_points = 100, A = np.array([ [0.,1.], [0., 0.] ]), B = np.array([ [0.], [1.] ]), start_x = np.array([[0],[0]]), noise = 1):
+def generate_trajectories_from_dynamics(num_trajs = 100, A = np.array([ [0.,1.], [0., 0.] ]), B = np.array([ [0.], [1.] ]), start_x = np.array([[0],[0]]), noise = 1):
 
+    num_points = 200 # same as promps phase time_steps
     '''
     x = [pos vel].T
     '''
@@ -105,8 +106,8 @@ def demo_generate_traj(additional_viapoint=False):
 
     if additional_viapoint:
         #add a via point
-        d_promp.add_viapoint(0.1, .004)
-        d_promp.add_viapoint(0.6, .0015)
+        d_promp.add_viapoint(0.2, .02)
+        d_promp.add_viapoint(0.7, .04)
 
     traj_data_1 = d_promp.generate_trajectory(phase_speed=0.8,  randomness=1e-1)
     traj_data_2 = d_promp.generate_trajectory(phase_speed=1.,   randomness=1e-1)

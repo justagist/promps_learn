@@ -40,16 +40,14 @@ class Phase():
         This funciton is to convert a timestep
         to a phase
         """
-        return time_steps/(self._phase_end)#-self._phase_start
+        return time_steps/self._phase_end
 
     def get_time_step(self, t):
         """
         This function is to compute the 
         time step of a phase
         """
-        # print t
         phase = self.get_phase_from_time(t)
-        # print phase
         return int(phase*self._time_steps)
 
     def __call__(self):
@@ -84,6 +82,9 @@ class DiscretePROMP(object):
         #time step
         self._dt  = 0.005
         
+        #list to store all demo traj velocities
+        self._Ddemo_trajs = self.compute_velocities()
+
         #number of basis function
         self._n_bfs = num_bfs
         #variance of the basis function
@@ -103,9 +104,6 @@ class DiscretePROMP(object):
 
         #compute the basis functions
         self._Phi, self._PhiD, self._PhiDD  = self.generate_basis_function(phase_z=self._phase._z, phase_zd=self._phase._Dz, phase_zdd=self._phase._DDz)
-
-        #list to store all demo traj velocities
-        self._Ddemo_trajs = self.generate_velocity_trajectories(self._demo_trajs, self._PhiD)
 
         #via points
         self._viapoints = []
@@ -187,15 +185,6 @@ class DiscretePROMP(object):
 
         return phase
 
-    def generate_velocity_trajectories(self, traj, PhiD):
-
-        vel_traj_list = []
-
-        for i in traj:
-            vel_traj = np.dot(PhiD, i)
-            vel_traj_list.append(vel_traj)
-
-        return vel_traj_list
 
     def train(self):
         """
@@ -307,7 +296,7 @@ class DiscretePROMP(object):
         return mean - std, mean + std
 
 
-    def generate_trajectory(self, phase_speed=1., randomness=1e-4, plot = False):
+    def generate_trajectory(self, phase_speed=1., randomness=1e-4):
         """
         Args: 
         phase_speed = speed at which the trajectory rolls
@@ -351,8 +340,8 @@ class DiscretePROMP(object):
 
         # plt.plot(xs,ys)
 
-        # # plt.fill_between(xs, ys - sigmas/2, ys + sigmas/2,
-        # #                 color='gray', alpha=0.2)
+        # plt.fill_between(xs, ys - sigmas/2, ys + sigmas/2,
+        #                 color='gray', alpha=0.2)
 
         # plt.show()
 
@@ -379,7 +368,7 @@ class DiscretePROMP(object):
         'PhiD':PhiD,
         #second derivative of basis function
         'PhiDD':PhiDD,
-        #phase that is used to generate the data
+        #phase that is use  d to generate the data
         'phase':phase,
         }
 
@@ -397,7 +386,7 @@ if __name__ == '__main__':
 
     promp = DiscretePROMP(traj_list)
     promp.train()
-    promp.generate_trajectory(phase_speed=2)
+    promp.generate_trajectory()
 
 
 
