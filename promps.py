@@ -1,8 +1,8 @@
 import copy
 import numpy as np
 import numpy.matlib as npm
-from scipy.interpolate import interp1d
 import matplotlib.pyplot as plt
+from scipy.interpolate import interp1d
 
 class Phase():
     """
