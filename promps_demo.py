@@ -190,7 +190,7 @@ def create_ctrl_traj():
 
 
 def main():
-    demo_generate_traj()
+    demo_generate_traj(True)
     create_ctrl_traj()
     plt.show()
 

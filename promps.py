@@ -75,8 +75,6 @@ class DiscretePROMP(object):
         self._num_demos = len(self._demo_trajs)
 
         #lenght of each demonstrations
-        self._num_centers_out_range = num_centers_outside_range
-        
         self._traj_len  = len(self._demo_trajs[0])
 
         #time step
@@ -326,7 +324,6 @@ class DiscretePROMP(object):
             new_sigma_W = new_sigma_W - np.dot(np.dot(new_sigma_W, PhiT) * 1 / aux, np.dot(PhiT.T, new_sigma_W))
 
         #get a weight sample from the weight distribution
-        
         sample_W =  np.random.multivariate_normal(new_mean_W, randomness*new_sigma_W, 1).T
 
 
